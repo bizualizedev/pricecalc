@@ -3,171 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <title>Chatbot Pricing Estimator</title>
-  <meta name="viewport" content="width=700, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Inter:400,500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=500, initial-scale=1">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: transparent;
-      margin: 0;
-      color: #434e5c;
-      font-size: 1.02em;
-      font-weight: 400;
-    }
-    .header {
-      background: transparent;
-      color: #0aa0a7;
-      padding: 0 0 18px 0;
-      font-size: 1.7rem;
-      font-weight: 500;
-      border-radius: 0;
-      letter-spacing: .5px;
-      text-align: left;
-      box-shadow: none;
-      border: none;
-    }
-    .container {
-      max-width: none;
-      margin: 0;
-      background: transparent;
-      border-radius: 0;
-      box-shadow: none;
-      padding: 0;
-      border: none;
-    }
-    .content {
-      padding: 0;
-      margin: 0;
-    }
-    h2 {
-      margin: 0 0 14px 0;
-      font-size: 1.22rem;
-      font-weight: 500;
-      color: #3d4c5c;
-      letter-spacing: 0.1px;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.8rem;
-      font-size: 1.01em;
-      font-weight: 400;
-      color: #586574;
-    }
-    .input, input[type="number"] {
-      width: 100%;
-      padding: 9px 12px;
-      border: 1.2px solid #d5dde5;
-      border-radius: 7px;
-      margin-top: 5px;
-      background: #f8fafc;
-      font-size: 1.08em;
-      color: #444e5b;
-      font-weight: 400;
-      transition: border .2s;
-    }
-    .input:focus, input[type="number"]:focus {
-      border-color: #0aa0a7;
-      outline: none;
-    }
-    .options {
-      margin-bottom: 1.3rem;
-    }
-    .options label {
-      margin-bottom: 0.45rem;
-      font-weight: 400;
-      cursor: pointer;
-      user-select: none;
-      color: #445361;
-      letter-spacing: 0.05px;
-    }
-    input[type="checkbox"] {
-      accent-color: #0aa0a7;
-      margin-right: 7px;
-      transform: scale(1.18);
-    }
-    .summary {
-      margin-top: 2.1rem;
-      padding: 0;
-      background: transparent;
-      border-radius: 0;
-      border: none;
-      box-shadow: none;
-      font-size: 1.11em;
-      color: #2e3a49;
-      font-weight: 400;
-    }
-    .summary strong {
-      font-weight: 500;
-      color: #169fa6;
-      letter-spacing: 0.07px;
-    }
-    .ack {
-      font-size: 0.97em;
-      color: #97a3b7;
-      margin-bottom: 10px;
-      font-weight: 400;
-    }
-    @media (max-width: 650px) {
-      .container { padding: 0; margin: 0; border-radius: 0; }
-      .content { padding: 0; }
-      .header { font-size: 1.3rem; }
+    body { font-family: sans-serif; background: #fafafa; }
+    .container { max-width: 480px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 4px 20px #0002; padding: 32px 24px; }
+    h2 { font-size: 1.5rem; margin-bottom: 1.2rem; }
+    label { display: block; margin-bottom: 0.75rem; }
+    .input, input[type="number"] { width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 6px; margin-top: 3px; }
+    .options { margin-bottom: 1.2rem; }
+    .options label { margin-bottom: 0.4rem; font-weight: 500; }
+    .summary { margin-top: 2rem; padding: 1rem; background: #f4f4f4; border-radius: 9px; }
+    .ack { font-size: 0.95em; color: #888; margin-bottom: 8px; }
+    @media (max-width: 600px) {
+      .container { padding: 18px 6px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">Chatbot Pricing Estimator</div>
-    <div class="content">
+    <h2>Chatbot Pricing Estimator</h2>
+
+    <label>
+      Design/Build Hours (if quoted):
+      <input type="number" id="hours" placeholder="Enter estimated hours" class="input">
+    </label>
+    <div class="ack" style="margin-bottom:16px;">
+      *Enter approximate hours if quoted, otherwise pricing will default to hourly rate.
+    </div>
+
+    <div class="options">
       <label>
-        Design/Build Hours (if quoted):
-        <input type="number" id="hours" placeholder="Enter estimated hours" class="input">
+        <input type="checkbox" id="selfManaged">
+        Platform Access (Self Managed) - $25 USD/month
       </label>
-      <div class="ack" style="margin-bottom:16px;">
-        *Enter approximate hours if quoted, otherwise pricing will default to hourly rate.
-      </div>
-      <div class="options">
-        <label>
-          <input type="checkbox" id="selfManaged">
-          Platform Access (Self Managed) - $25 USD/month
-        </label>
-        <label>
-          <input type="checkbox" id="managed">
-          Platform Access (Managed) - $30 USD/month
-        </label>
-        <label>
-          <input type="checkbox" id="initialSetup">
-          Initial Hosting Set-up - $50 AUD (one-time)
-        </label>
-        <label>
-          <input type="checkbox" id="maintenancePlan">
-          Maintenance Plan - $40 AUD/month
-        </label>
-        <label>
-          <input type="checkbox" id="training">
-          Platform Training (half-day) - $480 AUD
-        </label>
-        <label>
-          <input type="checkbox" id="embeddingService">
-          Embedding Service - $250 AUD
-        </label>
-      </div>
-      <div class="summary" id="summary">
-        <div><strong>One-time Upfront Costs:</strong> $0.00 AUD</div>
-        <div><strong>Monthly Recurring Costs:</strong> $0.00 AUD</div>
-      </div>
-      <div class="ack" style="margin-top:22px;">
-        <label>
-          <input type="checkbox" id="ackDesignNote">
-          I acknowledge that prices are dependent on final design complexity.
-        </label>
-        <br>
-        <label>
-          <input type="checkbox" id="ackConversionNote">
-          I acknowledge that USD prices are converted to AUD at a rate of 1.5 for budgetary purposes, and may change based on exchange rates.
-        </label>
-      </div>
+      <label>
+        <input type="checkbox" id="managed">
+        Platform Access (Managed) - $30 USD/month
+      </label>
+      <label>
+        <input type="checkbox" id="initialSetup">
+        Initial Hosting Set-up - $50 AUD (one-time)
+      </label>
+      <label>
+        <input type="checkbox" id="maintenancePlan">
+        Maintenance Plan - $40 AUD/month
+      </label>
+      <label>
+        <input type="checkbox" id="training">
+        Platform Training (half-day) - $480 AUD
+      </label>
+      <label>
+        <input type="checkbox" id="embeddingService">
+        Embedding Service - $250 AUD
+      </label>
+    </div>
+
+    <div class="summary" id="summary">
+      <div><strong>One-time Upfront Costs:</strong> $0.00 AUD</div>
+      <div><strong>Monthly Recurring Costs:</strong> $0.00 AUD</div>
+    </div>
+
+    <div class="ack" style="margin-top:22px;">
+      <label>
+        <input type="checkbox" id="ackDesignNote">
+        I acknowledge that prices are dependent on final design complexity.
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" id="ackConversionNote">
+        I acknowledge that USD prices are converted to AUD at a rate of 1.5 for budgetary purposes, and may change based on exchange rates.
+      </label>
     </div>
   </div>
+
   <script>
     // Rates & Conversion
     const hourlyRate = 175;
