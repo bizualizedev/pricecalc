@@ -12,4 +12,4 @@ A simple, fully self-contained HTML tool for estimating chatbot build and monthl
 Once deployed (e.g., via GitHub Pages), embed it in your website with:
 
 ```html
-<iframe src="https://yourusername.github.io/pricing-estimator/" width="500" height="700" style="border:0;"></iframe>
+<iframe src="https://bizualizedev.github.io/pricecalc/" width="500" height="700" style="border:0;"></iframe>
