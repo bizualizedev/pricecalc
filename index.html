@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: transparent;   /* <-- transparent body */
+      background: transparent;
       margin: 0;
       color: #434e5c;
       font-size: 1.02em;
@@ -27,7 +27,7 @@
     .container {
       max-width: 510px;
       margin: 36px auto;
-      /* background: #fff; <-- removed for transparency */
+      background: transparent; /* <-- fully transparent */
       border-radius: 14px;
       box-shadow: 0 6px 30px #0001;
       padding: 0 0 34px 0;
@@ -73,154 +73,4 @@
       font-weight: 400;
       cursor: pointer;
       user-select: none;
-      color: #445361;
-      letter-spacing: 0.05px;
-    }
-    input[type="checkbox"] {
-      accent-color: #0aa0a7;
-      margin-right: 7px;
-      transform: scale(1.18);
-    }
-    .summary {
-      margin-top: 2.1rem;
-      padding: 1.25rem 1rem 1.15rem 1rem;
-      background: transparent;   /* <-- transparent summary */
-      border-radius: 12px;
-      border: 1.1px solid #e2ebee;
-      font-size: 1.11em;
-      color: #2e3a49;
-      box-shadow: 0 1px 5px #0aa0a714;
-      font-weight: 400;
-    }
-    .summary strong {
-      font-weight: 500;
-      color: #169fa6;
-      letter-spacing: 0.07px;
-    }
-    .ack {
-      font-size: 0.97em;
-      color: #97a3b7;
-      margin-bottom: 10px;
-      font-weight: 400;
-    }
-    @media (max-width: 650px) {
-      .container { padding: 0; margin: 0; border-radius: 0;}
-      .content { padding: 16px 7px 0 7px;}
-      .header { padding: 18px 0 13px 11px;}
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">Chatbot Pricing Estimator</div>
-    <div class="content">
-      <label>
-        Design/Build Hours (if quoted):
-        <input type="number" id="hours" placeholder="Enter estimated hours" class="input">
-      </label>
-      <div class="ack" style="margin-bottom:16px;">
-        *Enter approximate hours if quoted, otherwise pricing will default to hourly rate.
-      </div>
-      <div class="options">
-        <label>
-          <input type="checkbox" id="selfManaged">
-          Platform Access (Self Managed) - $25 USD/month
-        </label>
-        <label>
-          <input type="checkbox" id="managed">
-          Platform Access (Managed) - $30 USD/month
-        </label>
-        <label>
-          <input type="checkbox" id="initialSetup">
-          Initial Hosting Set-up - $50 AUD (one-time)
-        </label>
-        <label>
-          <input type="checkbox" id="maintenancePlan">
-          Maintenance Plan - $40 AUD/month
-        </label>
-        <label>
-          <input type="checkbox" id="training">
-          Platform Training (half-day) - $480 AUD
-        </label>
-        <label>
-          <input type="checkbox" id="embeddingService">
-          Embedding Service - $250 AUD
-        </label>
-      </div>
-      <div class="summary" id="summary">
-        <div><strong>One-time Upfront Costs:</strong> $0.00 AUD</div>
-        <div><strong>Monthly Recurring Costs:</strong> $0.00 AUD</div>
-      </div>
-      <div class="ack" style="margin-top:22px;">
-        <label>
-          <input type="checkbox" id="ackDesignNote">
-          I acknowledge that prices are dependent on final design complexity.
-        </label>
-        <br>
-        <label>
-          <input type="checkbox" id="ackConversionNote">
-          I acknowledge that USD prices are converted to AUD at a rate of 1.5 for budgetary purposes, and may change based on exchange rates.
-        </label>
-      </div>
-    </div>
-  </div>
-  <script>
-    // Rates & Conversion
-    const hourlyRate = 175;
-    const usdToAudRate = 1.5;
-
-    // Elements
-    const hoursInput = document.getElementById('hours');
-    const selfManagedInput = document.getElementById('selfManaged');
-    const managedInput = document.getElementById('managed');
-    const initialSetupInput = document.getElementById('initialSetup');
-    const maintenancePlanInput = document.getElementById('maintenancePlan');
-    const trainingInput = document.getElementById('training');
-    const embeddingServiceInput = document.getElementById('embeddingService');
-    const summaryDiv = document.getElementById('summary');
-
-    function calculateCosts() {
-      const hours = parseFloat(hoursInput.value) || 0;
-      const designBuildCost = hours * hourlyRate;
-
-      // If Managed is checked, Initial Setup is auto-checked & locked
-      if (managedInput.checked) {
-        initialSetupInput.checked = true;
-        initialSetupInput.disabled = true;
-      } else {
-        initialSetupInput.disabled = false;
-      }
-
-      const upfrontCosts =
-        (initialSetupInput.checked ? 50 : 0) +
-        (trainingInput.checked ? 480 : 0) +
-        (embeddingServiceInput.checked ? 250 : 0) +
-        designBuildCost;
-
-      const monthlyUSD = (selfManagedInput.checked ? 25 : 0) + (managedInput.checked ? 30 : 0);
-      const monthlyAUD = (maintenancePlanInput.checked ? 40 : 0);
-      const monthlyCosts = (monthlyUSD * usdToAudRate) + monthlyAUD;
-
-      summaryDiv.innerHTML = `
-        <div><strong>One-time Upfront Costs:</strong> $${upfrontCosts.toFixed(2)} AUD</div>
-        <div><strong>Monthly Recurring Costs:</strong> $${monthlyCosts.toFixed(2)} AUD</div>
-      `;
-    }
-
-    // Attach listeners
-    [
-      hoursInput, selfManagedInput, managedInput,
-      initialSetupInput, maintenancePlanInput,
-      trainingInput, embeddingServiceInput
-    ].forEach(el => el.addEventListener('input', calculateCosts));
-    [
-      selfManagedInput, managedInput,
-      initialSetupInput, maintenancePlanInput,
-      trainingInput, embeddingServiceInput
-    ].forEach(el => el.addEventListener('change', calculateCosts));
-
-    // Initialize on page load
-    calculateCosts();
-  </script>
-</body>
-</html>
+      color: #
