@@ -26,14 +26,11 @@
     }
     .container {
       max-width: 510px;
-  margin: 36px auto;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 30px #0001;
-  padding: 0 0 70px 0;
-  min-height: 0;
-  height: auto;
-  overflow: visible;
+      margin: 36px auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 30px #0001;
+      padding: 0 0 70px 0;
     }
     .content {
       padding: 28px 30px 0 30px;
@@ -43,7 +40,6 @@
       font-size: 1.22rem;
       font-weight: 500;
       color: #3d4c5c;
-      letter-spacing: 0.1px;
     }
     label {
       display: block;
@@ -51,6 +47,7 @@
       font-size: 1.01em;
       font-weight: 400;
       color: #586574;
+      cursor: pointer;
     }
     .input, input[type="number"] {
       width: 100%;
@@ -61,23 +58,11 @@
       background: #f8fafc;
       font-size: 1.08em;
       color: #444e5b;
-      font-weight: 400;
       transition: border .2s;
     }
     .input:focus, input[type="number"]:focus {
       border-color: #0aa0a7;
       outline: none;
-    }
-    .options {
-      margin-bottom: 1.3rem;
-    }
-    .options label {
-      margin-bottom: 0.45rem;
-      font-weight: 400;
-      cursor: pointer;
-      user-select: none;
-      color: #445361;
-      letter-spacing: 0.05px;
     }
     input[type="checkbox"] {
       accent-color: #0aa0a7;
@@ -86,25 +71,22 @@
     }
     .summary {
       margin-top: 2.1rem;
-      padding: 1.25rem 1rem 1.15rem 1rem;
+      padding: 1.25rem 1rem;
       background: #f7fafb;
       border-radius: 12px;
       border: 1.1px solid #e2ebee;
       font-size: 1.11em;
       color: #2e3a49;
       box-shadow: 0 1px 5px #0aa0a714;
-      font-weight: 400;
     }
     .summary strong {
       font-weight: 500;
       color: #169fa6;
-      letter-spacing: 0.07px;
     }
     .ack {
       font-size: 0.97em;
       color: #97a3b7;
       margin-bottom: 10px;
-      font-weight: 400;
     }
     @media (max-width: 650px) {
       .container { padding: 0; margin: 0; border-radius: 0;}
@@ -114,115 +96,101 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <main class="container">
     <div class="header">Chatbot Pricing Estimator</div>
     <div class="content">
       <label>
         Design/Build Hours (if quoted):
-        <input type="number" id="hours" placeholder="Enter estimated hours" class="input">
+        <input type="number" id="hours" placeholder="Enter estimated hours" class="input" min="0" step="1">
       </label>
-      <div class="ack" style="margin-bottom:16px;">
+      <div class="ack">
         *Enter approximate hours if quoted, otherwise pricing will default to hourly rate.
       </div>
-      <div class="options">
-        <label>
-          <input type="checkbox" id="selfManaged">
-          Platform Access (Self Managed) - $25 USD/month
-        </label>
-        <label>
-          <input type="checkbox" id="managed">
-          Platform Access (Managed) - $30 USD/month
-        </label>
-        <label>
-          <input type="checkbox" id="initialSetup">
-          Initial Hosting Set-up - $50 AUD (one-time)
-        </label>
-        <label>
-          <input type="checkbox" id="maintenancePlan">
-          Maintenance Plan - $40 AUD/month
-        </label>
-        <label>
-          <input type="checkbox" id="training">
-          Platform Training (half-day) - $480 AUD
-        </label>
-        <label>
-          <input type="checkbox" id="embeddingService">
-          Embedding Service - $250 AUD
-        </label>
+
+      <div>
+        <label><input type="checkbox" id="selfManaged"> Platform Access (Self Managed) - $25 USD/month</label>
+        <label><input type="checkbox" id="managed"> Platform Access (Managed) - $30 USD/month</label>
+        <label><input type="checkbox" id="initialSetup"> Initial Hosting Set-up - $50 AUD (one-time)</label>
+        <label><input type="checkbox" id="maintenancePlan"> Maintenance Plan - $40 AUD/month</label>
+        <label><input type="checkbox" id="training"> Platform Training (half-day) - $480 AUD</label>
+        <label><input type="checkbox" id="embeddingService"> Embedding Service - $250 AUD</label>
       </div>
-      <div class="summary" id="summary">
+
+      <div class="summary" id="summary" aria-live="polite">
         <div><strong>One-time Upfront Costs:</strong> $0.00 AUD</div>
         <div><strong>Monthly Recurring Costs:</strong> $0.00 AUD</div>
       </div>
+
       <div class="ack" style="margin-top:22px;">
-        <label>
-          <input type="checkbox" id="ackDesignNote">
-          I acknowledge that prices are dependent on final design complexity.
-        </label>
-        <br>
-        <label>
-          <input type="checkbox" id="ackConversionNote">
-          I acknowledge that USD prices are converted to AUD at a rate of 1.5 for budgetary purposes, and may change based on exchange rates.
-        </label>
+        <label><input type="checkbox" id="ackDesignNote"> I acknowledge that prices are dependent on final design complexity.</label><br>
+        <label><input type="checkbox" id="ackConversionNote"> I acknowledge that USD prices are converted to AUD at a rate of 1.5 for budgetary purposes, and may change based on exchange rates.</label>
       </div>
     </div>
-  </div>
-  <script>
-    // Rates & Conversion
-    const hourlyRate = 175;
-    const usdToAudRate = 1.5;
+  </main>
 
-    // Elements
-    const hoursInput = document.getElementById('hours');
-    const selfManagedInput = document.getElementById('selfManaged');
-    const managedInput = document.getElementById('managed');
-    const initialSetupInput = document.getElementById('initialSetup');
-    const maintenancePlanInput = document.getElementById('maintenancePlan');
-    const trainingInput = document.getElementById('training');
-    const embeddingServiceInput = document.getElementById('embeddingService');
+  <script>
+    const PRICES = {
+      hourlyRateAUD: 175,
+      usdToAud: 1.5,
+      selfManaged: { monthlyUSD: 25 },
+      managed: { monthlyUSD: 30, requiresInitialSetup: true },
+      initialSetup: { upfrontAUD: 50 },
+      maintenancePlan: { monthlyAUD: 40 },
+      training: { upfrontAUD: 480 },
+      embeddingService: { upfrontAUD: 250 }
+    };
+
+    const formatAUD = (value) =>
+      new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD' }).format(value);
+
+    const inputs = {
+      hours: document.getElementById('hours'),
+      selfManaged: document.getElementById('selfManaged'),
+      managed: document.getElementById('managed'),
+      initialSetup: document.getElementById('initialSetup'),
+      maintenancePlan: document.getElementById('maintenancePlan'),
+      training: document.getElementById('training'),
+      embeddingService: document.getElementById('embeddingService')
+    };
+
     const summaryDiv = document.getElementById('summary');
 
     function calculateCosts() {
-      const hours = parseFloat(hoursInput.value) || 0;
-      const designBuildCost = hours * hourlyRate;
+      const hours = parseFloat(inputs.hours.value) || 0;
+      let upfrontCosts = hours * PRICES.hourlyRateAUD;
 
-      // If Managed is checked, Initial Setup is auto-checked & locked
-      if (managedInput.checked) {
-        initialSetupInput.checked = true;
-        initialSetupInput.disabled = true;
+      // Managed includes Initial Setup automatically
+      if (inputs.managed.checked) {
+        inputs.initialSetup.checked = true;
+        inputs.initialSetup.disabled = true;
       } else {
-        initialSetupInput.disabled = false;
+        inputs.initialSetup.disabled = false;
       }
 
-      const upfrontCosts =
-        (initialSetupInput.checked ? 50 : 0) +
-        (trainingInput.checked ? 480 : 0) +
-        (embeddingServiceInput.checked ? 250 : 0) +
-        designBuildCost;
+      if (inputs.initialSetup.checked) upfrontCosts += PRICES.initialSetup.upfrontAUD;
+      if (inputs.training.checked) upfrontCosts += PRICES.training.upfrontAUD;
+      if (inputs.embeddingService.checked) upfrontCosts += PRICES.embeddingService.upfrontAUD;
 
-      const monthlyUSD = (selfManagedInput.checked ? 25 : 0) + (managedInput.checked ? 30 : 0);
-      const monthlyAUD = (maintenancePlanInput.checked ? 40 : 0);
-      const monthlyCosts = (monthlyUSD * usdToAudRate) + monthlyAUD;
+      const monthlyUSD = 
+        (inputs.selfManaged.checked ? PRICES.selfManaged.monthlyUSD : 0) +
+        (inputs.managed.checked ? PRICES.managed.monthlyUSD : 0);
+
+      const monthlyAUD =
+        (monthlyUSD * PRICES.usdToAud) +
+        (inputs.maintenancePlan.checked ? PRICES.maintenancePlan.monthlyAUD : 0);
 
       summaryDiv.innerHTML = `
-        <div><strong>One-time Upfront Costs:</strong> $${upfrontCosts.toFixed(2)} AUD</div>
-        <div><strong>Monthly Recurring Costs:</strong> $${monthlyCosts.toFixed(2)} AUD</div>
+        <div><strong>One-time Upfront Costs:</strong> ${formatAUD(upfrontCosts)}</div>
+        <div><strong>Monthly Recurring Costs:</strong> ${formatAUD(monthlyAUD)}</div>
       `;
     }
 
-    // Attach listeners
-    [
-      hoursInput, selfManagedInput, managedInput,
-      initialSetupInput, maintenancePlanInput,
-      trainingInput, embeddingServiceInput
-    ].forEach(el => el.addEventListener('input', calculateCosts));
-    [
-      selfManagedInput, managedInput,
-      initialSetupInput, maintenancePlanInput,
-      trainingInput, embeddingServiceInput
-    ].forEach(el => el.addEventListener('change', calculateCosts));
+    // Attach both input & change events to all controls
+    Object.values(inputs).forEach(el => {
+      el.addEventListener('input', calculateCosts);
+      el.addEventListener('change', calculateCosts);
+    });
 
-    // Initialize on page load
     calculateCosts();
   </script>
 </body>
